@@ -1,0 +1,33 @@
+local M = {}
+
+M.setup = function()
+	vim.cmd("highlight Normal guibg=#121212 guifg=#ededed")
+	vim.cmd("highlight String guifg=#00ca50 guibg=NONE")
+	vim.cmd("highlight Keyword guifg=#ff4d8d guibg=NONE")
+	vim.cmd("highlight Constant guifg=#47a8ff guibg=NONE")
+	vim.cmd("highlight Function guifg=#c472fb guibg=NONE")
+	vim.cmd("highlight Comment guifg=#5c6370 guibg=NONE")
+	vim.cmd("highlight Type guifg=#ff4d8d guibg=NONE")
+	vim.cmd("highlight Identifier guifg=#47a8ff guibg=NONE")
+	vim.cmd("highlight Statement guifg=#ff4d8d guibg=NONE")
+	vim.cmd("highlight PreProc guifg=#ff4d8d guibg=NONE")
+	vim.cmd("highlight Number guifg=#47a8ff guibg=NONE")
+	vim.cmd("highlight Boolean guifg=#47a8ff guibg=NONE")
+	vim.cmd("highlight Operator guifg=#ededed guibg=NONE")
+	vim.cmd("highlight Special guifg=#c472fb guibg=NONE")
+	vim.cmd("highlight Title guifg=#ededed guibg=NONE")
+	vim.cmd("highlight Todo guifg=#ff4d8d guibg=NONE")
+	vim.cmd("highlight DiagnosticError guifg=#ff4d8d guibg=NONE")
+	vim.cmd("highlight DiagnosticWarn guifg=#c472fb guibg=NONE")
+	vim.cmd("highlight DiagnosticInfo guifg=#47a8ff guibg=NONE")
+	vim.cmd("highlight DiagnosticHint guifg=#00ca50 guibg=NONE")
+	vim.cmd("highlight CursorLine guibg=#2e2e2e")
+	vim.cmd("highlight Visual guibg=#3e4452")
+	vim.cmd("highlight LineNr guifg=#5c6370 guibg=NONE")
+	vim.cmd("highlight CursorLineNr guifg=#ededed guibg=NONE")
+	vim.cmd("highlight Pmenu guibg=#2e2e2e guifg=#ededed")
+	vim.cmd("highlight PmenuSel guibg=#47a8ff guifg=#121212")
+	vim.cmd("highlight VertSplit guifg=#5c6370 guibg=#121212")
+end
+
+return M
