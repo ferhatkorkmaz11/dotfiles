@@ -42,37 +42,29 @@ require("lazy").setup({
 	{ "akinsho/bufferline.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, version = "*" },
 	{ "nvim-lualine/lualine.nvim", dependencies = { "nvim-tree/nvim-web-devicons" } },
 	{ "numToStr/Comment.nvim", opts = {}, lazy = false },
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("copilot").setup({
-				panel = {
-					enabled = true,
-					auto_refresh = false,
-					keymap = {
-						jump_prev = "[[",
-						jump_next = "]]",
-						accept = "<CR>",
-						refresh = "gr",
-						open = "<M-CR>",
-					},
-				},
-				suggestion = {
-					enabled = true,
-					auto_trigger = true,
-					keymap = {
-						accept = "<Tab>",
-						next = "<M-]>",
-						prev = "<M-[>",
-						dismiss = "<C-]>",
-					},
-				},
-			})
-		end,
-	},
 	{ "stevearc/conform.nvim", lazy = false },
+	{ "github/copilot.vim", lazy = false },
+	{ "folke/trouble.nvim", dependencies = { "nvim-tree/nvim-web-devicons" }, config = true },
+	{
+		"NeogitOrg/neogit",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"sindrets/diffview.nvim",
+		},
+		config = true,
+		cmd = "Neogit",
+		keys = {
+			{ "<leader>gg", "<cmd>Neogit<CR>", desc = "Open Neogit" },
+		},
+	},
+	{
+		"lewis6991/gitsigns.nvim",
+		config = true,
+	},
+	{
+		"sindrets/diffview.nvim",
+		cmd = { "DiffviewOpen", "DiffviewFileHistory" },
+	},
 })
 
 -- Treesitter
@@ -242,8 +234,8 @@ require("lualine").setup({
 
 require("conform").setup({
 	formatters_by_ft = {
-		javascript = { "prettier" },
-		typescript = { "prettier" },
+		javascript = { "prettier", "eslint_d" },
+		typescript = { "prettier", "eslint_d" },
 		lua = { "stylua" },
 		go = { "gofmt" },
 		java = { "google-java-format" },
@@ -255,14 +247,17 @@ require("conform").setup({
 })
 
 -- Keybindings
+-- NvimTree
 vim.keymap.set("n", "<Leader>e", ":NvimTreeToggle<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>fe", ":NvimTreeFocus<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>fr", ":NvimTreeFindFile<CR>", { silent = true })
 
+-- Telescope
 vim.keymap.set("n", "<Leader>ff", ":Telescope find_files<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>fg", ":Telescope live_grep<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>ft", ":Telescope buffers<CR>", { silent = true })
 
+-- Bufferline
 vim.keymap.set("n", "<Tab>", ":BufferLineCycleNext<CR>", { silent = true })
 vim.keymap.set("n", "<S-Tab>", ":BufferLineCyclePrev<CR>", { silent = true })
 vim.keymap.set("n", "<Leader>bd", ":bdelete<CR>", { silent = true })
@@ -271,6 +266,57 @@ vim.keymap.set("n", "<leader>fm", function()
 end, { desc = "Format current buffer" })
 vim.keymap.set("n", "<Leader>ca", vim.lsp.buf.code_action, { silent = true, noremap = true, desc = "Code Action" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { silent = true, noremap = true, desc = "Go to Definition" })
-vim.keymap.set("n", "gr", vim.lsp.buf.references, { silent = true, noremap = true, desc = "Go to References" })
 vim.keymap.set("n", "<Leader>q", ":cclose<CR>", { silent = true, noremap = true, desc = "Close Quickfix List" })
 vim.keymap.set("n", "<Leader>lq", ":lclose<CR>", { silent = true, noremap = true, desc = "Close Location List" })
+
+-- Trouble
+vim.keymap.set("n", "<leader>xx", "<cmd>Trouble diagnostics toggle<cr>")
+vim.keymap.set("n", "<leader>xX", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>")
+vim.keymap.set("n", "<leader>cl", "<cmd>Trouble lsp toggle focus=false win.position=right<cr>")
+vim.keymap.set("n", "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>")
+vim.keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>")
+vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>")
+
+vim.keymap.set("n", "gr", "<cmd>Trouble lsp toggle focus=true win.position=bottom<cr>", {
+	desc = "LSP References with focus",
+	silent = true,
+	noremap = true,
+})
+
+-- Copilot
+vim.g.copilot_enabled = false
+
+vim.api.nvim_create_user_command("CopilotEnable", function()
+	vim.g.copilot_enabled = true
+	print("✅ Copilot enabled")
+end, {})
+
+vim.api.nvim_create_user_command("CopilotDisable", function()
+	vim.g.copilot_enabled = false
+	print("❌ Copilot disabled")
+end, {})
+
+vim.keymap.set("n", "<leader>ce", ":CopilotEnable<CR>", { desc = "Copilot Enable", silent = true })
+vim.keymap.set("n", "<leader>cd", ":CopilotDisable<CR>", { desc = "Copilot Disable", silent = true })
+
+-- Git
+vim.keymap.set("n", "<leader>gg", "<cmd>Neogit<CR>", { desc = "Open Neogit", silent = true })
+vim.keymap.set("n", "]c", function()
+	require("gitsigns").next_hunk()
+end, { desc = "Next Git Hunk" })
+
+vim.keymap.set("n", "[c", function()
+	require("gitsigns").prev_hunk()
+end, { desc = "Previous Git Hunk" })
+
+vim.keymap.set("n", "<leader>gp", function()
+	require("gitsigns").preview_hunk()
+end, { desc = "Preview Git Hunk" })
+
+vim.keymap.set("n", "<leader>gh", function()
+	require("gitsigns").reset_hunk()
+end, { desc = "Reset Git Hunk" })
+
+vim.keymap.set("n", "<leader>do", "<cmd>DiffviewOpen<CR>", { desc = "Open Diffview", silent = true })
+vim.keymap.set("n", "<leader>dc", "<cmd>DiffviewClose<CR>", { desc = "Close Diffview", silent = true })
+vim.keymap.set("n", "<leader>df", "<cmd>DiffviewFileHistory<CR>", { desc = "File History (Diffview)", silent = true })
