@@ -65,6 +65,11 @@ require("lazy").setup({
 		"sindrets/diffview.nvim",
 		cmd = { "DiffviewOpen", "DiffviewFileHistory" },
 	},
+	{
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		config = true,
+	},
 })
 
 -- Treesitter
@@ -245,6 +250,8 @@ require("conform").setup({
 		lsp_fallback = true,
 	},
 })
+
+require("which-key").setup({})
 
 -- Keybindings
 -- NvimTree
