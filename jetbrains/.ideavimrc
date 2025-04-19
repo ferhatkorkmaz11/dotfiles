@@ -1,0 +1,18 @@
+set number
+set relativenumber
+set NERDTree
+
+let mapleader = " "
+
+nnoremap <leader>fe :action ActivateProjectToolWindow<CR>
+nnoremap <Esc>       :action HideActiveWindow<CR>
+nnoremap <leader>fg  :action FindInPath<CR>
+nnoremap <leader>rn  :action RenameElement<CR>
+nnoremap gr          :action FindUsages<CR>
+nnoremap <Tab>       :action NextTab<CR>
+nnoremap <S-Tab>     :action PreviousTab<CR>
+nnoremap ca          :action ShowIntentionActions<CR>
+nnoremap <leader>fm :action ReformatCode<CR>
+nnoremap <leader>rr :action Run<CR>
+
+

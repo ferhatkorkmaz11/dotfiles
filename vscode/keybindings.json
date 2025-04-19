@@ -1,0 +1,38 @@
+[
+  {
+    "key": "cmd+t",
+    "command": "workbench.action.terminal.new"
+  },
+  {
+    "key": "cmd+1",
+    "command": "workbench.action.terminal.focusAtIndex1"
+  },
+  {
+    "key": "cmd+2",
+    "command": "workbench.action.terminal.focusAtIndex2"
+  },
+  {
+    "key": "cmd+3",
+    "command": "workbench.action.terminal.focusAtIndex3"
+  },
+  {
+    "key": "cmd+4",
+    "command": "workbench.action.terminal.focusAtIndex4"
+  },
+  {
+    "key": "f2",
+    "command": "editor.action.marker.next",
+    "when": "editorTextFocus"
+  },
+  {
+    "key": "shift+f6",
+    "command": "editor.action.rename",
+    "when": "editorHasRenameProvider && editorTextFocus && !editorReadonly"
+  },
+  {
+    "key": "enter",
+    "command": "list.select",
+    "when": "explorerViewletVisible && !inputFocus && vim.mode == 'Normal'"
+  }
+]
+

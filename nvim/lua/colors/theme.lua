@@ -1,33 +1,40 @@
 local M = {}
 
 M.setup = function()
-	vim.cmd("highlight Normal guibg=#121212 guifg=#ededed")
-	vim.cmd("highlight String guifg=#00ca50 guibg=NONE")
-	vim.cmd("highlight Keyword guifg=#ff4d8d guibg=NONE")
-	vim.cmd("highlight Constant guifg=#47a8ff guibg=NONE")
-	vim.cmd("highlight Function guifg=#c472fb guibg=NONE")
-	vim.cmd("highlight Comment guifg=#5c6370 guibg=NONE")
-	vim.cmd("highlight Type guifg=#ff4d8d guibg=NONE")
-	vim.cmd("highlight Identifier guifg=#47a8ff guibg=NONE")
-	vim.cmd("highlight Statement guifg=#ff4d8d guibg=NONE")
-	vim.cmd("highlight PreProc guifg=#ff4d8d guibg=NONE")
-	vim.cmd("highlight Number guifg=#47a8ff guibg=NONE")
-	vim.cmd("highlight Boolean guifg=#47a8ff guibg=NONE")
-	vim.cmd("highlight Operator guifg=#ededed guibg=NONE")
-	vim.cmd("highlight Special guifg=#c472fb guibg=NONE")
-	vim.cmd("highlight Title guifg=#ededed guibg=NONE")
-	vim.cmd("highlight Todo guifg=#ff4d8d guibg=NONE")
-	vim.cmd("highlight DiagnosticError guifg=#ff4d8d guibg=NONE")
-	vim.cmd("highlight DiagnosticWarn guifg=#c472fb guibg=NONE")
-	vim.cmd("highlight DiagnosticInfo guifg=#47a8ff guibg=NONE")
-	vim.cmd("highlight DiagnosticHint guifg=#00ca50 guibg=NONE")
-	vim.cmd("highlight CursorLine guibg=#2e2e2e")
-	vim.cmd("highlight Visual guibg=#3e4452")
-	vim.cmd("highlight LineNr guifg=#5c6370 guibg=NONE")
-	vim.cmd("highlight CursorLineNr guifg=#ededed guibg=NONE")
-	vim.cmd("highlight Pmenu guibg=#2e2e2e guifg=#ededed")
-	vim.cmd("highlight PmenuSel guibg=#47a8ff guifg=#121212")
-	vim.cmd("highlight VertSplit guifg=#5c6370 guibg=#121212")
+	local highlights = {
+		Normal = { fg = "#ededed", bg = "#121212" },
+		String = { fg = "#00ca50" },
+		Keyword = { fg = "#ff4d8d" },
+		Constant = { fg = "#47a8ff" },
+		Function = { fg = "#c472fb" },
+		Comment = { fg = "#5c6370" },
+		Type = { fg = "#ff4d8d" },
+		Identifier = { fg = "#47a8ff" },
+		Statement = { fg = "#ff4d8d" },
+		PreProc = { fg = "#ff4d8d" },
+		Number = { fg = "#47a8ff" },
+		Boolean = { fg = "#47a8ff" },
+		Operator = { fg = "#ededed" },
+		Special = { fg = "#c472fb" },
+		Title = { fg = "#ededed" },
+		Todo = { fg = "#ff4d8d" },
+		DiagnosticError = { fg = "#ff4d8d" },
+		DiagnosticWarn = { fg = "#c472fb" },
+		DiagnosticInfo = { fg = "#47a8ff" },
+		DiagnosticHint = { fg = "#00ca50" },
+		CursorLine = { bg = "#2e2e2e" },
+		Visual = { bg = "#3e4452" },
+		LineNr = { fg = "#5c6370" },
+		CursorLineNr = { fg = "#ededed" },
+		Pmenu = { fg = "#ededed", bg = "#2e2e2e" },
+		PmenuSel = { fg = "#121212", bg = "#47a8ff" },
+		VertSplit = { fg = "#5c6370", bg = "#121212" },
+	}
+
+	for group, opts in pairs(highlights) do
+		vim.api.nvim_set_hl(0, group, opts)
+	end
 end
 
 return M
+
